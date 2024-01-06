@@ -1,4 +1,4 @@
-package com.example.shopapp.DTO;
+package com.example.shopapp.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Min;
@@ -19,7 +19,7 @@ public class OrderDetailDTO {
     private Long productId;
 
     @Min(value = 0, message = "The price must be >= 0")
-    private Long price;
+    private Float price;
 
     @Min(value = 1, message = "The number_of_product must be >0")
     @JsonProperty("number_of_product")
@@ -27,7 +27,7 @@ public class OrderDetailDTO {
 
     @JsonProperty("total_money")
     @Min(value = 0, message = "The total_money must be >0")
-    private int totalMoney;
+    private float totalMoney;
 
     private String color;
 

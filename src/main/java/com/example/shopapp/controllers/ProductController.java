@@ -1,6 +1,8 @@
-package com.example.shopapp.Controller;
+package com.example.shopapp.controllers;
 
-import com.example.shopapp.DTO.ProductDTO;
+import com.example.shopapp.dtos.ProductDTO;
+import com.example.shopapp.services.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +12,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +23,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/products")
+@RequiredArgsConstructor
 public class ProductController {
+    private final ProductService productService;
     @PostMapping(value = "",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     //POST http://localhost:8088/v1/api/products
@@ -58,7 +61,9 @@ public class ProductController {
                 String filename = storeFile(file); // Thay thế hàm này với code của bạn để lưu file
                 //lưu vào đối tượng product trong DB => sẽ làm sau
                 //lưu vào bảng product_images
+
             }
+            productService.createProduct(productDTO);
             return ResponseEntity.ok("Product created successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
